@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /
+# Staging. At launch replace with:
+# User-agent: *
+# Allow: /
+# Sitemap: https://fwg.global/sitemap.xml
