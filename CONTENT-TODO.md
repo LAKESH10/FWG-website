@@ -15,7 +15,7 @@ The same list appears on the site at `#review`. Turn on "Show items to confirm" 
 | Accreditations | Current certificates with expiry dates. OHSAS 18001 has been replaced by ISO 45001. | Accreditations |
 | Awards | The sites claim 12 awards but only 2 are named. | Accreditations |
 | Clients | Written permission to name each client, plus logo files. | Home, India |
-| India | One registered company name, and confirmed figures (22 branches, 211 clients, 2,200 workforce). The "8 countries" claim does not match the 4 countries named. | India |
+| India | The page now follows fwgindia.com. Still to confirm: one registered company name, whether the figures are current (22 branches, 211 clients, 2,200 workforce, 12 awards), and office closing time (6pm or 7pm). Left out: "8 countries", "12,000 guards" and the "1933" date, which conflict with group sources. | India |
 | Singapore, Ventures, Dubai, Nepal | Plans, timing, and whether each page should be public. | Singapore, Ventures |
 | Property | Developer company name, licence and contact details. Completion dates and prices for Rinching. | Property |
 | Trustee | Licence number and regulator. | Trustee |
@@ -23,3 +23,10 @@ The same list appears on the site at `#review`. Turn on "Show items to confirm" 
 | Privacy | Privacy notices for Malaysia and India. | Privacy |
 | Dark mode | Approval of the dark palette, which Brand Guidelines 1.01 does not define. | Whole site |
 | Language | Whether a Bahasa Malaysia version is needed. | Whole site |
+| Values | fwg.my lists six values (Relate, Team, Unique, Safe, Talent, Trust); the brand guideline lists four. Supply the wording for Trust, or remove Talent and Trust. | About |
+| Our Story figures | Confirm that 206 projects and 870 contractors are current. | About |
+| Corporate profile | Supply an updated PDF to host on fwg.global. The current one says 1996 and OHSAS. | Malaysia |
+| Newsletters | Supply the 2019 newsletter PDFs so the archive survives the move from fwg.my. | News |
+| Office hours | Malaysian office hours. | Contact |
+| Careers | Current openings per country. | Careers |
+| WhatsApp | The button is built. Set the numbers in `assets/js/fx3d.js` (`WA`). | All pages |

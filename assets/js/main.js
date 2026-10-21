@@ -1,6 +1,7 @@
 /* FWG Group website
  * 1. Router, menus, review notes, forms
  * 2. Theme, fades, home interactions and 3D scenes (three.js r128)
+ * 3. Background parallax
  */
 (function(){
   var pages=[].slice.call(document.querySelectorAll('section.page'));
@@ -8,14 +9,16 @@
   var nav=document.getElementById('main-nav'),toggle=document.getElementById('menu-toggle');
   function closeMenus(){nav.classList.remove('open');toggle.setAttribute('aria-expanded','false');document.querySelectorAll('.dd').forEach(function(d){d.classList.remove('open')})}
   function show(){
-    var h=(location.hash||'#home').slice(1),target=h,anchor=null;
+    var h=(window.FWG_ROUTE?window.FWG_ROUTE():(location.hash||'#home').slice(1)),target=h,anchor=null;
     if(names.indexOf(h)<0){var el=h&&document.getElementById(h);var host=el&&el.closest('section.page');if(host){target=host.dataset.page;anchor=el}else target='home'}
     pages.forEach(function(p){p.hidden=p.dataset.page!==target});
     document.querySelectorAll('[data-nav]').forEach(function(a){var on=a.dataset.nav.split(' ').indexOf(target)>=0;a.classList.toggle('on',on);if(a.tagName==='A'){if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')}});
     closeMenus();
     if(anchor){anchor.scrollIntoView()}else{window.scrollTo(0,0)}
     var t=document.querySelector('section.page:not([hidden]) h1');
-    document.title=target==='home'?'FWG Group':(t?t.textContent+' · FWG Group':'FWG Group');
+    var M=window.FWG_META&&FWG_META[target];document.title=M?M.t:(t?t.textContent+' · FWG Group':'FWG Group');
+    if(M){var md=document.querySelector('meta[name=description]');if(md)md.setAttribute('content',M.d);var og=document.querySelector('meta[property="og:title"]');if(og)og.setAttribute('content',M.t);var od=document.querySelector('meta[property="og:description"]');if(od)od.setAttribute('content',M.d);var cl=document.querySelector('link[rel=canonical]');if(cl)cl.setAttribute('href','https://fwg.global'+M.p)}
+    window.dispatchEvent(new CustomEvent('fwg:route',{detail:target}));
     window.dispatchEvent(new Event('resize'));window.dispatchEvent(new Event('scroll'));
   }
   window.addEventListener('hashchange',show);show();
@@ -31,7 +34,6 @@
   wire('career-form','career-done','Thank you. In the live site your application would now go to the recruitment team. This preview does not send anything.');
   document.querySelectorAll('.cpy').forEach(function(b){b.addEventListener('click',function(){var v=b.dataset.copy;function ok(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1500)}try{navigator.clipboard.writeText(v).then(ok,function(){b.textContent=v})}catch(e){b.textContent=v}})});
 })();
-
 (function(){
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.documentElement.classList.add('js');
@@ -281,3 +283,7 @@
     document.addEventListener('fwgtheme',function(e){setShift(e.detail)});
   })();
 })();
+/* gentle parallax for background graphics; off for reduced motion */
+(function(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var els=[].slice.call(document.querySelectorAll('.deco .px'));var tick=false;
+function run(){tick=false;var vh=innerHeight;for(var i=0;i<els.length;i++){var e=els[i],r=e.parentNode.getBoundingClientRect();if(!r.height||r.bottom<-200||r.top>vh+200)continue;var d=(r.top+r.height/2-vh/2);e.style.setProperty('--py',(d*(i%2?-.08:.06)).toFixed(1)+'px')}}
+addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(run)}},{passive:true});addEventListener('hashchange',function(){setTimeout(run,60)});run()})();

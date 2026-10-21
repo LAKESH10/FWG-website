@@ -10,7 +10,7 @@ It is a static site: plain HTML, CSS and JavaScript, with no build step. It runs
 
 | Area | Contents |
 |---|---|
-| Home | A 3D city hero with a camera dolly-in, glossy 3D brand icons, four service cards, an FWG in numbers panel, and a 3D site that switches between day and night |
+| Home | A 3D city hero with a camera dolly-in; animated 3D scenes for the four services and the three getting-started steps; an FWG in numbers panel with count-up figures; and a 3D site that switches between day and night |
 | Group pages | About, Accreditations, Request a quote, Careers, News, Contact, Privacy, Ventures |
 | Malaysia | Overview, Security services, Electronic security, Branches, FWG Trustee, Property |
 | Countries | India, Singapore (placeholder) |
@@ -27,10 +27,13 @@ Features:
 
 ```
 fwg-website/
-├── index.html              # all pages (hash routes: #about, #security, #quote …)
+├── index.html              # all pages in one file
+├── about/ malaysia/ india/ …  # one static copy per page, each with its own title and description
+├── sitemap.xml, vercel.json   # search engines; clean URLs on Vercel
 ├── assets/
 │   ├── css/styles.css      # design tokens (light + dark) and components
 │   ├── js/main.js          # router, menus, forms, theme, 3D scenes
+│   ├── js/fx3d.js          # animated 3D vignettes (one shared renderer) + motion
 │   ├── img/                # logo, photos, pre-rendered 3D icons
 │   └── vendor/three.min.js # three.js r128 (MIT)
 ├── robots.txt              # blocks indexing while staging
@@ -47,16 +50,24 @@ Brand colours and fonts come from Brand Guidelines 1.01. They are defined once a
 |---|---|---|
 | FWG Burgundy (fills) | `#660220` | `#660220` |
 | Accent text | `#660220` | `#CC9AA5` (Burgundy 40%) |
-| Background | `#F7F6F6` | `#1A1617` |
-| Surface | `#FFFFFF` | `#262122` |
-| Text | `#231F20` (Deep Charcoal) | `#F3EFF0` |
+| Background | `#F7F6F6` (Light Neutral 01) | `#231F20` (Deep Charcoal) |
+| Surface | `#FFFFFF` | `#2E2A2B` (Deep Charcoal, lifted) |
+| Text | `#231F20` (Deep Charcoal) | `#F7F6F6` (Light Neutral 01) |
+| Tints | `#853549` `#A96877` `#CC9AA5` `#E6CCD2` | same |
+| Neutrals | `#F7F6F6` `#F0EEEE` `#E5E2E3` `#D8D4D5` | same |
 
-- **Fonts:** Manrope for headlines and Inter for body text, loaded from Google Fonts.
+- **Fonts (guideline p.15–16):** Manrope for headlines, section titles and key messages (bold; subheads semibold). Inter for body copy, captions and the interface: menu, buttons and labels. Both load from Google Fonts.
 - **Dark mode:** the guideline does not define a dark palette yet, so FWG needs to approve these values.
 
 ### Pages and routes
 
-Each page is a `<section class="page" data-page="…">` in `index.html`. The router in `main.js` shows one page at a time based on the URL hash, for example `index.html#security`.
+Each page is a `<section class="page" data-page="…">` in `index.html`. Pages have real addresses, for example `fwg.global/malaysia/security` or `fwg.global/india`. Each address is a static copy of the site with that page's own title, description and canonical link, so search engines index every page. `assets/js/paths.js` keeps navigation instant once the site is open. Old hash links such as `#security` still work.
+
+Page titles and descriptions are set in one place, the `FWG_META` block in the head of each file. They are generated from `meta.py` in the build.
+
+### WhatsApp button
+
+The WhatsApp button is built but hidden until a number is set. Add each country's number, digits only with the country code, to `var WA={MY:'',IN:'',SG:''}` in `assets/js/fx3d.js`.
 
 ## Run locally
 
