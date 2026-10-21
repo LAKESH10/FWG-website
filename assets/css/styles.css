@@ -843,6 +843,15 @@ footer .coverage{margin-top:28px;font-size:12px;letter-spacing:.08em;text-transf
 .wa[hidden]{display:none}
 .office{align-content:start}
 
+/* bigger hero icons on inner pages */
+.phero .side{position:relative}
+.phero .ph3d{width:clamp(220px,26vw,380px);margin:-30px auto -10px;align-self:center;filter:drop-shadow(0 34px 40px rgba(35,31,32,.22))}
+.phero .side:has(.ph3d){align-items:center}
+@media (max-width:860px){.phero .ph3d{width:clamp(170px,48vw,240px);margin:0 0 4px}}
+
+@media (min-width:861px){.phero .wrap{align-items:center}
+.phero .side:has(.btn) .ph3d{width:clamp(200px,20vw,300px);margin:-40px auto -6px}}
+
 /* Section photos (defined here so paths resolve from this file) */
 [data-ph="guard-authentic"]{--ph:url(../img/guard-authentic.jpg)}
 [data-ph="guard-professional"]{--ph:url(../img/guard-professional.jpg)}
